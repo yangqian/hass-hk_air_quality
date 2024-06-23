@@ -44,7 +44,7 @@ class HKAirQualitySensor(CoordinatorEntity, SensorEntity):
     @property
     def state(self):
         content = self.coordinator.data
-        pattern = fr'"stationNameEN":"{self._city}".*?"{self._measure}":"([.\d]+)"'
+        pattern = fr'"StationNameEN":"{self._city}".*?"{self._measure}":"([.\d]+)"'
         match = re.search(pattern, content)
 
         if match:
