@@ -1,0 +1,5 @@
+{
+    "name": "Hong Kong Air Quality",
+    "domains": ["sensor"],
+    "homeassistant": "2021.12.0"
+}
