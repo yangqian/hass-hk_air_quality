@@ -1,0 +1,11 @@
+{
+  "domain": "hk_air_quality",
+  "name": "Hong Kong Air Quality",
+  "config_flow": true,
+  "documentation": "https://github.com/your-username/hk-air-quality",
+  "dependencies": [],
+  "codeowners": ["@your-github-username"],
+  "iot_class": "cloud_polling",
+  "version": "1.0.0",
+  "requirements": []
+}

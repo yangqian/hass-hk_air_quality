@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "name": "Name",
+          "city": "City",
+          "measure": "Measure"
+        },
+        "description": "Enter select a city and choose what you want to measure."
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to retrieve data from the Hong Kong Air Quality API.",
+      "unknown": "Unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This city is already configured."
+    }
+  }
+}
