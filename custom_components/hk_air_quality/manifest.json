@@ -3,6 +3,7 @@
   "name": "Hong Kong Air Quality",
   "config_flow": true,
   "documentation": "https://github.com/yangqian/hass-hk_air_quality",
+  "issue_tracker": "https://github.com/yangqian/hass-hk_air_quality/issues",
   "dependencies": [],
   "codeowners": ["@yangqian"],
   "iot_class": "cloud_polling",
