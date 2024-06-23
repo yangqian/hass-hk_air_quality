@@ -1,6 +1,9 @@
 # hass-hk_air_quality
 Hong Kong Air Quality custom components for home assistant
 
+# How to add to HACS
+https://hacs.xyz/docs/faq/custom_repositories/
+
 ## What is it
 AQI data from Hong Kong Goverment website https://www.aqhi.gov.hk/tc/index.html, current cities including 
 | Cities          | 城市  |
