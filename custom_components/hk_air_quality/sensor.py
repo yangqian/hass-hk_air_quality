@@ -15,8 +15,9 @@ async def async_setup_entry(hass, entry, async_add_entities):
     config_id = entry.entry_id
     coordinator = hass.data[DOMAIN][config_id]["coordinator"]
     city = hass.data[DOMAIN][config_id]["city"]
-    measure = hass.data[DOMAIN][config_id]["measure"]
-    async_add_entities([HKAirQualitySensor(coordinator, city, measure, config_id)], True)
+    measure_list = hass.data[DOMAIN][config_id]["measure"]
+    for measure in measure_list: 
+        async_add_entities([HKAirQualitySensor(coordinator, city, measure, config_id)], True)
 
 class HKAirQualitySensor(CoordinatorEntity, SensorEntity):
     def __init__(self, coordinator, city, measure, config_id: str):

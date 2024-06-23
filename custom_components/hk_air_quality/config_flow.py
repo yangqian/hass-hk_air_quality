@@ -3,7 +3,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from .const import DOMAIN, CONF_CITY, CONF_MEASURE
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-
+import homeassistant.helpers.config_validation as cv
 import re
 
 class HKAirQualityConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -11,12 +11,19 @@ class HKAirQualityConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             return self.async_create_entry(title=user_input[CONF_CITY], data=user_input)
         cities = await self.get_available_cities()
+        measure_list=["aqhi","NO2","O3","SO2","CO","PM10","PM25"]
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_CITY, default="Tai Po"): vol.In(cities),
-                    vol.Required(CONF_MEASURE, default="PM25"): vol.In(["aqhi","NO2","O3","SO2","CO","PM10","PM25"]),
+                    vol.Required(CONF_MEASURE, default=["PM25"]): 
+                    cv.multi_select(
+                        {
+                            measure: measure
+                            for measure in measure_list
+                        }
+                    )
                 }
             ),
         )
