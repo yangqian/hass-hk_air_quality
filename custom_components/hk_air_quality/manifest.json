@@ -1,11 +1,12 @@
 {
   "domain": "hk_air_quality",
   "name": "Hong Kong Air Quality",
-  "config_flow": true,
-  "documentation": "https://github.com/yangqian/hass-hk_air_quality",
-  "dependencies": [],
   "codeowners": ["@yangqian"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/yangqian/hass-hk_air_quality",
   "iot_class": "cloud_polling",
-  "version": "1.0.0",
-  "requirements": []
+  "issue_tracker": "https://github.com/yangqian/hass-hk_air_quality/issues",
+  "requirements": [],
+  "version": "1.0.0"
 }

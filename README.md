@@ -30,5 +30,10 @@ AQHI, NO2, O3, SO2, PM10, PM2.5
 AQHI、二氧化氮、臭氧、二氧化硫、PM10、PM2.5
 
 ## Data Scraper source
-Despite the document says it provides an API, I did not find it anywhere.
-Pulls data from https://www.aqhi.gov.hk/js/data/past_24_pollutant.js using grep
+Despite documents say the APIs are provided, I did not find them anywhere.
+Pulls data from https://www.aqhi.gov.hk/js/data/past_24_pollutant.js acusing regular expression matching.
+
+## APIs seem to be outdated
+* https://github.com/sammyfung/hkaqhi
+* https://www.weather.org.hk/aqi.html
+* https://github.com/hongkongkiwi/node-hongkong-pollution
