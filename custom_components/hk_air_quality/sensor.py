@@ -26,6 +26,7 @@ class HKAirQualitySensor(CoordinatorEntity, SensorEntity):
         self._city = city
         self._measure = measure
         self._name = f"{city} {measure}"
+        self._attr_state_class = "measurement"  # Set state class to measurement
 
     @property
     def device_info(self) -> DeviceInfo:
