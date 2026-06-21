@@ -1,3 +1,5 @@
+import asyncio
+import logging
 import voluptuous as vol
 
 from homeassistant import config_entries
@@ -5,6 +7,20 @@ from .const import DOMAIN, CONF_CITY, CONF_MEASURE
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
 import re
+
+from .ssl_context import async_get_ssl_context
+
+_LOGGER = logging.getLogger(__name__)
+
+# Known monitoring stations, used as a fallback so the config flow can always
+# render its form even if the live data source is slow or unreachable.
+DEFAULT_CITIES = [
+    "Causeway Bay", "Central", "Central/Western", "Eastern", "Kwai Chung",
+    "Kwun Tong", "Mong Kok", "North", "Sha Tin", "Sham Shui Po", "Southern",
+    "Tai Po", "Tap Mun", "Tseung Kwan O", "Tsuen Wan", "Tuen Mun",
+    "Tung Chung", "Yuen Long",
+]
+
 
 class HKAirQualityConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
@@ -32,8 +48,17 @@ class HKAirQualityConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         url = "https://www.aqhi.gov.hk/js/data/past_24_pollutant.js"
         session = async_get_clientsession(self.hass)
 
-        async with session.get(url) as response:
-            content = await response.text()
+        try:
+            ssl_context = await async_get_ssl_context(self.hass)
+            async with asyncio.timeout(10):
+                async with session.get(url, ssl=ssl_context) as response:
+                    content = await response.text()
             pattern = r'"StationNameEN":"([^"]+)"'
             cities = sorted(set(re.findall(pattern, content)))
-            return cities
+        except Exception as err:  # noqa: BLE001 - never let the form fail to load
+            _LOGGER.warning("Could not fetch HK air quality stations: %s", err)
+            cities = []
+
+        # Fall back to (and merge with) the known stations so the form always
+        # has selectable cities, even if the live source is unavailable.
+        return sorted(set(cities) | set(DEFAULT_CITIES))

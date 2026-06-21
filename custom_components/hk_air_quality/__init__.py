@@ -7,17 +7,20 @@ from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN, CONF_CITY, CONF_MEASURE
 from .config_flow import HKAirQualityConfigFlow
+from .ssl_context import async_get_ssl_context
 
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data.setdefault(DOMAIN, {})
 
+    ssl_context = await async_get_ssl_context(hass)
+
     async def async_update_data():
         url = "https://www.aqhi.gov.hk/js/data/past_24_pollutant.js"
         session = async_get_clientsession(hass)
 
-        async with session.get(url) as response:
+        async with session.get(url, ssl=ssl_context) as response:
             content = await response.text()
             return content
 
